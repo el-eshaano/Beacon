@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "871746921113",
+    "project_id": "healthtracker-fe8e1",
+    "storage_bucket": "healthtracker-fe8e1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871746921113:android:a29f6ecac560a30b698e08",
+        "android_client_info": {
+          "package_name": "com.eshaan.beacon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "871746921113-7ajlufjli9pu7lip2jg6j7gcreri9gl4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eshaan.beacon",
+            "certificate_hash": "c11c6fac7aa5496c00798176c9767f0035fc56ac"
+          }
+        },
+        {
+          "client_id": "871746921113-941qt9j82hf49snavlqea98f8gnejnol.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6NCH8f6iskcm_Z39NiMvoXiy-fJDMgZA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "871746921113-941qt9j82hf49snavlqea98f8gnejnol.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
