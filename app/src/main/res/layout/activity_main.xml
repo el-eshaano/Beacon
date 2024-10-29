@@ -86,60 +86,106 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/Grid"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/ChartTop_Limit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="0dp"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/BMIChart"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/ChartBottom_Limit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ChartTop_Limit" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/ChartBottom_Limit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="0dp"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Add a datapoint!"
+        android:textColor="#49454F"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/Left_Limit"
+        app:layout_constraintTop_toBottomOf="@+id/BMIChart" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toStartOf="@+id/Right_Limit"
         app:layout_constraintStart_toStartOf="@+id/Left_Limit"
-        app:layout_constraintTop_toBottomOf="@+id/UsernameText">
+        app:layout_constraintTop_toBottomOf="@+id/textView4">
 
-        <LinearLayout
-            android:id="@+id/Row1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+        <EditText
+            android:id="@+id/Weight_EditText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@drawable/custom_input"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:paddingStart="10dp"
+            android:textColor="#49454F" />
+
+        <TextView
+            android:id="@+id/WeightUnitDisplay_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:text="kg"
+            android:textAlignment="center"
+            android:textColor="#49454F"
+            android:textSize="18sp" />
 
-            <Button
-                android:id="@+id/Videos_Button"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="20dp"
-                android:layout_weight="1"
-                android:backgroundTint="#49454F"
-                android:text="Videos"
-                android:textColor="#E9E9E9"
-                app:cornerRadius="20dp" />
+        <EditText
+            android:id="@+id/Height_EditText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@drawable/custom_input"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:paddingStart="10dp"
+            android:textColor="#49454F" />
 
-            <Button
-                android:id="@+id/BMI_Button"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="20dp"
-                android:layout_weight="1"
-                android:backgroundTint="#FF49454F"
-                android:text="Calculate BMI"
-                android:textColor="#E9E9E9"
-                app:cornerRadius="20dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/Row2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+        <TextView
+            android:id="@+id/HeightUnitDisplay_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="horizontal"></LinearLayout>
+            android:text="cm"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="18sp" />
 
-        <LinearLayout
-            android:id="@+id/Row3"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+        <ImageButton
+            android:id="@+id/AddData_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="horizontal"></LinearLayout>
+            android:background="#3F51B4"
+            android:tint="#EAEAEA"
+            app:srcCompat="@drawable/add" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

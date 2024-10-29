@@ -1,5 +1,8 @@
 package com.eshaan.beacon;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,11 +15,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.util.Map;
-
 public class SettingsActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
+    static final String WEIGHT_KEY = "weight_unit";
+    static final String HEIGHT_KEY = "height_unit";
+    static final String NOTIFICATION_KEY = "notification_freq";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,31 +41,65 @@ public class SettingsActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("com.eshaan.beacon", MODE_PRIVATE);
 
 
-        RadioGroup unitRadioGroup = findViewById(R.id.Unit_RadioGroup);
-        unitRadioGroup.check(sharedPreferences.getString("unit", "kg").equals("kg") ? R.id.Kg_RadioButton : R.id.Lbs_RadioButton);
-        setRadioGroupListener(unitRadioGroup, "unit", Map.of(
-                R.id.Kg_RadioButton, "kg",
-                R.id.Lbs_RadioButton, "lbs"
-        ));
+        RadioGroup weightUnitRadioGroup = findViewById(R.id.WeightUnit_RadioGroup);
+        weightUnitRadioGroup.check(
+            sharedPreferences.getString(WEIGHT_KEY, "kg")
+                    .equals("kg") ? R.id.Kg_RadioButton : R.id.Lbs_RadioButton
+        );
+        weightUnitRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(WEIGHT_KEY, checkedId == R.id.Kg_RadioButton ? "kg" : "lbs");
+            editor.apply();
+            Log.d("SettingsActivity", "Saved weight unit as " + (checkedId == R.id.Kg_RadioButton ? "kg" : "lbs"));
+        });
+
+        RadioGroup heightUnitRadioGroup = findViewById(R.id.HeightUnit_RadioGroup);
+        heightUnitRadioGroup.check(
+            sharedPreferences.getString(HEIGHT_KEY, "cm")
+                    .equals("cm") ? R.id.Cm_RadioButton : R.id.Inches_RadioButton
+        );
+        heightUnitRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(HEIGHT_KEY, checkedId == R.id.Cm_RadioButton ? "cm" : "in");
+            editor.apply();
+            Log.d("SettingsActivity", "Saved height unit as " + (checkedId == R.id.Cm_RadioButton ? "cm" : "in"));
+        });
 
         RadioGroup notificationFreqRadioGroup = findViewById(R.id.Notification_RadioGroup);
-        notificationFreqRadioGroup.check(sharedPreferences.getString("notificationFreq", "3").equals("3") ? R.id.ThreeMonths_RadioButton :
-                sharedPreferences.getString("notificationFreq", "3").equals("6") ? R.id.SixMonths_RadioButton : R.id.TwelveMonths_RadioButton);
-        setRadioGroupListener(notificationFreqRadioGroup, "notificationFreq", Map.of(
-                R.id.ThreeMonths_RadioButton, 3,
-                R.id.SixMonths_RadioButton, 6,
-                R.id.TwelveMonths_RadioButton, 12
-        ));
+        int checkedVal = sharedPreferences.getInt(NOTIFICATION_KEY, 3);
+        notificationFreqRadioGroup.check(
+           checkedVal == 3 ? R.id.ThreeMonths_RadioButton :
+           checkedVal == 6 ? R.id.SixMonths_RadioButton :
+                    R.id.TwelveMonths_RadioButton
+        );
 
+        notificationFreqRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
 
+            int currentVal = sharedPreferences.getInt(NOTIFICATION_KEY, 3);
+            int newVal = checkedId == R.id.ThreeMonths_RadioButton ? 3 :
+                    checkedId == R.id.SixMonths_RadioButton ? 6 : 12;
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt(NOTIFICATION_KEY, newVal);
+            editor.apply();
+            Log.d("SettingsActivity", "Saved notificationFreq as " + newVal);
+
+            if (currentVal != newVal) updateAlarm(currentVal, newVal);
+        });
     }
 
-    private <T> void setRadioGroupListener(RadioGroup radioGroup, String key, Map<Integer, T> valueMap) {
-        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(key, valueMap.get(checkedId).toString());
-            editor.apply();
-            Log.d("SettingsActivity", "Saved " + key + " as " + valueMap.get(checkedId));
-        });
+    private void updateAlarm(int currentVal, int newVal){
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        if (alarmManager == null) return;
+
+        Intent intent = new Intent(this, NotifManager.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        alarmManager.cancel(pendingIntent);
+
+//        long interval = AlarmManager.INTERVAL_DAY * 30 * newVal;
+        long interval = 60000L; // 1 minute
+//        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 10, pendingIntent);
+        Log.d("SettingsActivity", "Set alarm to repeat every " + interval + " months");
     }
 }

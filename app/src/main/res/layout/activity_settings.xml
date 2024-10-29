@@ -45,7 +45,7 @@
         app:layout_constraintStart_toStartOf="@+id/LeftLimit" />
 
     <TextView
-        android:id="@+id/Unit_TextView"
+        android:id="@+id/WeightUnit_TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
@@ -57,13 +57,13 @@
         app:layout_constraintTop_toTopOf="@+id/TopLimit" />
 
     <RadioGroup
-        android:id="@+id/Unit_RadioGroup"
+        android:id="@+id/WeightUnit_RadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:checkedButton="@id/Kg_RadioButton"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="@+id/LeftLimit"
-        app:layout_constraintTop_toBottomOf="@+id/Unit_TextView">
+        app:layout_constraintTop_toBottomOf="@+id/WeightUnit_TextView">
 
         <RadioButton
             android:id="@+id/Kg_RadioButton"
@@ -88,6 +88,37 @@
 
     </RadioGroup>
 
+    <RadioGroup
+        android:id="@+id/HeightUnit_RadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checkedButton="@id/Cm_RadioButton"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@+id/LeftLimit"
+        app:layout_constraintTop_toBottomOf="@+id/WeightUnit_RadioGroup">
+
+        <RadioButton
+            android:id="@+id/Cm_RadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="cm"
+            android:textColor="#49454F"
+            android:textSize="18sp"
+            app:buttonTint="#3F51B5" />
+
+        <RadioButton
+            android:id="@+id/Inches_RadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:text="in"
+            android:textColor="#49454F"
+            android:textSize="18sp"
+            app:buttonTint="#3F51B5" />
+    </RadioGroup>
+
     <TextView
         android:id="@+id/Notification_TextView"
         android:layout_width="0dp"
@@ -99,7 +130,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/RightLimit"
         app:layout_constraintStart_toStartOf="@+id/LeftLimit"
-        app:layout_constraintTop_toBottomOf="@+id/Unit_RadioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/HeightUnit_RadioGroup" />
 
     <RadioGroup
         android:id="@+id/Notification_RadioGroup"
