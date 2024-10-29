@@ -1,17 +1,26 @@
 package com.eshaan.beacon;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mAuth = FirebaseAuth.getInstance();
-
     }
 
     @Override
@@ -39,14 +47,33 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
             Log.d("MainActivity", "User is not signed in");
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
+            redirectTo(LoginActivity.class);
         }
-        else {
-            Log.d("MainActivity", "Current User: " + currentUser.getDisplayName());
-            Log.e("MainActivity", "User is signed in. SHOULD NOT REACH HERE");
-            // User is signed in
-            // Redirect to home activity
-        }
+
+        TextView usernameTextView = findViewById(R.id.UsernameText);
+
+        assert currentUser != null;
+        usernameTextView.setText(currentUser.getDisplayName());
+
+        initializeButtons();
+    }
+
+    private void redirectTo(Class<?> activity){
+        Intent intent = new Intent(MainActivity.this, activity);
+        startActivity(intent);
+    }
+
+    private void initializeButtons() {
+        ImageButton settingsButton = findViewById(R.id.Settings_Button);
+        settingsButton.setOnClickListener(v -> redirectTo(SettingsActivity.class));
+
+        ImageButton signOutButton = findViewById(R.id.SignOut_Button);
+        signOutButton.setOnClickListener(v -> {
+            mAuth.signOut();
+            redirectTo(LoginActivity.class);
+        });
+
+        Button videosButton = findViewById(R.id.Videos_Button);
+        videosButton.setOnClickListener(v -> redirectTo(VideosActivity.class));
     }
 }

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EAEAEA"
+    tools:context=".SettingsActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/TopLimit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="0dp"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/LeftLimit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="0dp"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/RightLimit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="0dp"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <TextView
+        android:id="@+id/Title_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:textColor="#3F51B5"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/TopLimit"
+        app:layout_constraintEnd_toStartOf="@+id/RightLimit"
+        app:layout_constraintStart_toStartOf="@+id/LeftLimit" />
+
+    <TextView
+        android:id="@+id/Unit_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="What unit do you prefer?"
+        android:textColor="#49454F"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/LeftLimit"
+        app:layout_constraintTop_toTopOf="@+id/TopLimit" />
+
+    <RadioGroup
+        android:id="@+id/Unit_RadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checkedButton="@id/Kg_RadioButton"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@+id/LeftLimit"
+        app:layout_constraintTop_toBottomOf="@+id/Unit_TextView">
+
+        <RadioButton
+            android:id="@+id/Kg_RadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="kg"
+            android:textColor="#49454F"
+            android:textSize="18sp"
+            app:buttonTint="#3F51B5" />
+
+        <RadioButton
+            android:id="@+id/Lbs_RadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:text="lbs"
+            android:textColor="#49454F"
+            android:textSize="18sp"
+            app:buttonTint="#3F51B5" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/Notification_TextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="How often should we remind you track your health?"
+        android:textColor="#49454F"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/RightLimit"
+        app:layout_constraintStart_toStartOf="@+id/LeftLimit"
+        app:layout_constraintTop_toBottomOf="@+id/Unit_RadioGroup" />
+
+    <RadioGroup
+        android:id="@+id/Notification_RadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/LeftLimit"
+        app:layout_constraintTop_toBottomOf="@+id/Notification_TextView">
+
+        <RadioButton
+            android:id="@+id/ThreeMonths_RadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:buttonTint="#3F51B5"
+            android:fontFamily="sans-serif-medium"
+            android:text="3 Months"
+            android:textColor="#49454F"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/SixMonths_RadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:buttonTint="#3F51B5"
+            android:fontFamily="sans-serif-medium"
+            android:text="6 Months"
+            android:textColor="#49454F"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/TwelveMonths_RadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:buttonTint="#3F51B5"
+            android:fontFamily="sans-serif-medium"
+            android:text="12 Months"
+            android:textColor="#49454F"
+            android:textSize="18sp" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/Back_Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:backgroundTint="#3F51B5"
+        android:text="Back"
+        android:textColor="#EAEAEA"
+        app:cornerRadius="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/RightLimit"
+        app:layout_constraintStart_toStartOf="@+id/LeftLimit" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
