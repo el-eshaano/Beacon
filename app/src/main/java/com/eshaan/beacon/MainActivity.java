@@ -7,6 +7,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,7 +41,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SensorEventListener{
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -49,7 +52,10 @@ public class MainActivity extends AppCompatActivity {
     LineChart chart;
     ArrayList<HashMap<String, Object>> bmiData;
 
-//    private Sensor pedometerSensor;
+    private SensorManager sensorManager;
+    private Sensor stepCounterSensor;
+    DottedProgressBar progressBar;
+    int baselineSteps = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +70,10 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         sharedPreferences = getSharedPreferences("com.eshaan.beacon", MODE_PRIVATE);
-//        pedometerSensor = get
+
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        stepCounterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+        progressBar = findViewById(R.id.DottedProgressBar);
     }
 
     @Override
@@ -88,7 +97,10 @@ public class MainActivity extends AppCompatActivity {
         initializeUI();
         refreshData();
         styleChart();
+        refreshSteps();
     }
+
+
 
     private void styleChart() {
         // X-axis styling and formatting
@@ -122,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         DocumentReference userDoc = db.collection("users").document(userId);
         userDoc.get().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
-                Log.e("MainActivity", "Failed to get user document", task.getException());
+                Log.e("Firebase", "Failed to get user document", task.getException());
                 return;
             }
 
@@ -130,11 +142,11 @@ public class MainActivity extends AppCompatActivity {
             assert userSnapshot != null;
 
             if (!userSnapshot.exists()) {
-                Log.e("MainActivity", "User document does not exist");
+                Log.e("Firebase", "User document does not exist");
                 return;
             }
 
-            Log.d("MainActivity", "User document found");
+            Log.d("Firebase", "User document found");
             HashMap<String, Object> data = (HashMap<String, Object>) userSnapshot.getData();
             assert data != null;
 
@@ -242,13 +254,49 @@ public class MainActivity extends AppCompatActivity {
 
             db.collection("users").document(userId).update("bmi", bmiData).addOnCompleteListener(task -> {
                 if (!task.isSuccessful()) {
-                    Log.e("MainActivity", "Failed to update user document", task.getException());
+                    Log.e("Firebase", "Failed to update user document", task.getException());
                     return;
                 }
 
-                Log.d("MainActivity", "User document updated");
+                Log.d("Firebase", "User document updated");
                 updateChart();
             });
         });
+    }
+
+    private void refreshSteps() {
+        if (stepCounterSensor == null) {
+            Log.w("StepCounter", "Step counter sensor not found");
+            return;
+        }
+
+        sensorManager.registerListener((SensorEventListener) this, stepCounterSensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        sensorManager.unregisterListener((SensorEventListener) this, stepCounterSensor);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        if (!(sensorEvent.sensor.getType() == Sensor.TYPE_STEP_COUNTER)) return;
+
+        int steps = (int) sensorEvent.values[0];
+        if (baselineSteps == -1) {
+            baselineSteps = steps;
+            Log.d("StepCounter", "Set baseline: " + baselineSteps);
+            return;
+        }
+        Log.d("StepCounter", "Steps: " + steps);
+
+        progressBar.setProgress(steps - baselineSteps);
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+        ;;
     }
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DottedProgressBar">
+        <attr name="progress" format="integer" />
+        <attr name="maxProgress" format="integer" />
+        <attr name="numberOfDots" format="integer" />
+        <attr name="dotRadius" format="dimension" />
+        <attr name="dotSpacing" format="dimension" />
+        <attr name="activeColor" format="color" />
+        <attr name="inactiveColor" format="color" />
+    </declare-styleable>
+</resources>
