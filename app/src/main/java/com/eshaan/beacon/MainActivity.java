@@ -225,6 +225,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             redirectTo(LoginActivity.class);
         });
 
+        ImageButton supportButton = findViewById(R.id.Support_Button);
+        supportButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(android.net.Uri.parse("tel:8369801262"));
+            startActivity(intent);
+        });
+
         Button notesButton = findViewById(R.id.Notes_Button);
         notesButton.setOnClickListener(v -> redirectTo(NotesActivity.class));
 
