@@ -16,12 +16,10 @@
         android:textColor="#49454F"
         android:textSize="32sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/ChartTop_Limit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/Left_Limit"
-        app:layout_constraintTop_toTopOf="@+id/Top_Limit"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toStartOf="@+id/Left_Limit" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/Top_Limit"
@@ -55,9 +53,8 @@
         android:textColor="#3F51B5"
         android:textSize="32sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/Hello"
-        app:layout_constraintStart_toEndOf="@+id/Hello"
-        app:layout_constraintTop_toTopOf="@+id/Top_Limit" />
+        app:layout_constraintBottom_toTopOf="@+id/ChartTop_Limit"
+        app:layout_constraintStart_toEndOf="@+id/Hello" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -92,7 +89,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="0dp"
-        app:layout_constraintGuide_percent="0.2" />
+        app:layout_constraintGuide_percent="0.17" />
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/BMIChart"
@@ -216,7 +213,7 @@
             android:layout_height="58dp"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="0dp"
-            android:background="@drawable/thick_box"
+            android:background="@drawable/box"
             android:elevation="3dp" />
 
         <com.eshaan.beacon.DottedProgressBar
@@ -232,7 +229,23 @@
             app:inactiveColor="#A3A3A3"
             app:maxProgress="100"
             app:numberOfDots="25"
-            app:progress="50" />
+            app:progress="0" />
     </FrameLayout>
+
+    <Button
+        android:id="@+id/Notes_Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:background="#00FFFFFF"
+        android:includeFontPadding="true"
+        android:padding="0dp"
+        android:text="I want to see my notes! ->"
+        android:textColor="#49454F"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:iconPadding="0dp"
+        app:layout_constraintStart_toStartOf="@+id/Left_Limit"
+        app:layout_constraintTop_toBottomOf="@+id/ProgressBar_Container" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

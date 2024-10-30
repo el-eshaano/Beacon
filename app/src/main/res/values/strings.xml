@@ -2,5 +2,5 @@
     <string name="app_name">Beacon</string>
     <string name="TitleText">Beacon</string>
     <string name="email">Email</string>
-    <string name="sign_in"><u>Sign In Instead</u></string>
+    <string name="sign_in"><u>Sign Up Instead</u></string>
 </resources>

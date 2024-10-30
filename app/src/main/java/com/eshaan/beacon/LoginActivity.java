@@ -1,6 +1,7 @@
 package com.eshaan.beacon;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -9,6 +10,7 @@ import android.widget.EditText;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -43,6 +45,27 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(v -> {
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
+
+            if (!Utils.isEmailValid(email)) {
+                Drawable errorBox = ContextCompat.getDrawable(this, R.drawable.error_box);
+                emailEditText.setBackground(errorBox);
+                return;
+            }
+            else {
+                Drawable thickBox = ContextCompat.getDrawable(this, R.drawable.box);
+                emailEditText.setBackground(thickBox);
+            }
+
+            if (!Utils.isPasswordValid(password)) {
+                Drawable errorBox = ContextCompat.getDrawable(this, R.drawable.error_box);
+                passwordEditText.setBackground(errorBox);
+                return;
+            }
+            else {
+                Drawable thickBox = ContextCompat.getDrawable(this, R.drawable.box);
+                passwordEditText.setBackground(thickBox);
+            }
+
 
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

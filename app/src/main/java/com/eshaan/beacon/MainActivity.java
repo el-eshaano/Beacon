@@ -13,6 +13,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         userId = currentUser.getUid();
 
         TextView usernameTextView = findViewById(R.id.UsernameText);
-        usernameTextView.setText(currentUser.getDisplayName());
+        usernameTextView.setText(currentUser.getDisplayName() + "!");
 
         chart = findViewById(R.id.BMIChart);
 
@@ -223,6 +224,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             mAuth.signOut();
             redirectTo(LoginActivity.class);
         });
+
+        Button notesButton = findViewById(R.id.Notes_Button);
+        notesButton.setOnClickListener(v -> redirectTo(NotesActivity.class));
 
         String preferredHeightUnit = sharedPreferences.getString(HEIGHT_KEY, "cm");
         TextView heightInputTextView = findViewById(R.id.HeightUnitDisplay_TextView);
